@@ -1,0 +1,23 @@
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+@import "../node_modules/bootstrap/scss/maps";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/utilities";
+
+$utilities: map-merge(
+    $utilities,
+    (
+        "background-color": map-merge(
+            map-get($utilities, "background-color"),
+            (
+                values: map-merge(
+                    map-get(map-get($utilities, "background-color"), "values"),
+                    ("section": $section-background),
+                ),
+            ),
+        ),
+    )
+);
+
+@import "../node_modules/bootstrap/scss/utilities/api";

@@ -1,1 +1,109 @@
+@import "./variables.scss";
+@import "./myUtilities.scss";
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+h1, h2, h3 {
+    font-family: $title-font, sans-serif;
+}
+
+h4 {
+    font-family: $text-font, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+}
+
+::placeholder {
+    color: $light-grey;
+}
+
+.header {
+    position: relative;
+    height: 660px;
+
+    & .img-container {
+        height: inherit;
+
+        & img {
+            object-position: 50% 70%;
+        }
+    }
+
+    & nav {
+        position: absolute;
+        top: 40px;
+        left: 100px;
+    }
+
+}
+
+.logo {
+    width: 200px;
+    height: 25px
+}
+
+.hero {
+    position: absolute;
+    top: 250px;
+
+    &__title {
+        font-size: 2.5rem;
+        padding: 0 250px;
+    }
+}
+
+.search-bar {
+    position: relative;
+
+    & span {
+        position: absolute;
+        color: white;
+        font-size: 1.25rem;
+        top: 50%;
+        right: 58px;
+        transform: translate(0, -50%);
+        z-index: 1;
+    }
+}
+
+.recipes {
+    padding: 0 100px;
+}
+
+.tagfilter {
+    position: relative;
+
+    &__icon {
+        position: absolute;
+        top: 10px;
+        right: 35px;
+    }
+}
+
+.card {
+    height: 750px;
+
+    &-img-top {
+        height: 250px;
+    }
+
+    &-text {
+        height: 100px;
+        overflow: hidden;
+    }
+
+    & h4 {
+        color: $grey;
+    }
+
+    & h5 + p {
+        color: $grey;
+    }
+}

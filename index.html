@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Les Petits Plats</title>
+</head>
+<body>
+    <header class="header">
+        <div class="img-container d-flex">
+            <img src="./assets/photo-1626509653291-18d9a934b9db.png" alt="plat de pâtes" class="w-100 z-n1 object-fit-cover">
+        </div>
+        <nav class="navbar navbar-expand">
+            <div class="row">
+                <div class="col">
+                    <a href="index" class="navbar-brand">
+                        <img src="/assets/Logo.svg" alt="logo Les Petits Plats" class="logo">
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero w-100">
+            <div class="container">
+                <div class="row px-5">
+                    <div class="col-12 mb-4">
+                        <h1 class="text-primary text-uppercase text-center lh-base hero__title">
+                            cherchez parmi plus de 1500 recettes du quotidien, simples et délicieuses
+                        </h1>
+                    </div>
+                    <div class="col-12 px-5 my-2 search-bar">
+                        <input type="text" class="form-control p-4" placeholder="Rechercher une recette, un ingrédient, ...">
+                        <span class="fa-solid fa-magnifying-glass p-3 bg-secondary rounded-2"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-100 bg-section recipes py-4">
+            <div class="row gx-4 align-items-center mb-4">
+                <div class="col-2 pe-4 tagfilter">
+                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Ingrédients</div>
+                    <div class="tagfilter__icon">
+                        <span class="fa-solid fa-chevron-up"></span>
+                    </div>
+                </div>
+                <div class="col-2 pe-4 tagfilter">
+                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Appareils</div>
+                    <div class="tagfilter__icon">
+                        <span class="fa-solid fa-chevron-up"></span>
+                    </div>
+                </div>
+                <div class="col-2 pe-4 tagfilter">
+                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Ustensils</div>
+                    <div class="tagfilter__icon">
+                        <span class="fa-solid fa-chevron-up"></span>
+                    </div>
+                </div>
+                <div class="col-6 text-end">
+                    <h2 id="recipesNumber" class="fs-4 my-0">blabla</h2>
+                </div>
+            </div>
+            <div class="row g-4 align-items-center mt-5" id="recipes-wrapper">
+
+            </div>
+        </section>
+    </main>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
