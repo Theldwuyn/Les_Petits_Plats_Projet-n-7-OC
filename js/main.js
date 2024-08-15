@@ -1,5 +1,5 @@
-import { getRecipesData } from "./API/api.js";
-import { Recipes } from "./Template/recipesTemplate.js";
+import { createRecipesObjectArray } from "./Template/recipesTemplate.js";
+import { displayFilter } from "./utils/dropdown-filter.js";
 
 //Récupérer les données
 //Créer les objets recipes
@@ -7,21 +7,26 @@ import { Recipes } from "./Template/recipesTemplate.js";
 //ajouter les éléments dom au html
 
 async function main() {
-    const {recipes} = await getRecipesData();
-    displayRecipes(recipes);
+    const arrayOfRecipeObject = await createRecipesObjectArray();
+    displayRecipes(arrayOfRecipeObject);
 }
 
-async function displayRecipes(recipes) {
-    console.log(recipes.length);
+export async function displayRecipes(arrayOfRecipeObject) {
+
     const recipesWrapper = document.getElementById("recipes-wrapper");
-    recipes.forEach((recipe) => {
-        const recipeObject = new Recipes(recipe);
+
+    if (recipesWrapper.hasChildNodes) {
+        recipesWrapper.innerHTML = '';
+    }
+
+    arrayOfRecipeObject.forEach((recipeObject) => {
         const recipeCard = recipeObject.getRecipesCard();
         recipesWrapper.appendChild(recipeCard);
     });
 
     const numberOfRecipes = numberOfRecipesDisplayed(recipesWrapper);
     displayNumberOfRecipes(numberOfRecipes);
+    displayFilter(arrayOfRecipeObject);
 }
 
 function numberOfRecipesDisplayed(recipesWrapper) {

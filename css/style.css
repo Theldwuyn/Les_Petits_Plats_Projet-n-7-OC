@@ -16698,8 +16698,9 @@ body {
 }
 .tagfilter__icon {
   position: absolute;
-  top: 10px;
-  right: 35px;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 }
 
 .card {
@@ -16717,6 +16718,14 @@ body {
 }
 .card h5 + p, .card .h5 + p {
   color: #7a7a7a;
+}
+
+.dropdown-item:hover {
+  background-color: #ffd15b;
+}
+
+.dropdown, #tag {
+  font-family: "Manrope", sans-serif;
 }
 
 /*# sourceMappingURL=style.css.map */

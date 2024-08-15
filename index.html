@@ -44,34 +44,72 @@
             </div>
         </section>
         <section class="w-100 bg-section recipes py-4">
+
+            <!--filters-->
             <div class="row gx-4 align-items-center mb-4">
-                <div class="col-2 pe-4 tagfilter">
-                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Ingrédients</div>
-                    <div class="tagfilter__icon">
-                        <span class="fa-solid fa-chevron-up"></span>
+
+                <div class="col-2 pe-4">
+                    <div class="dropdown">
+                        <div class="btn-group w-100">
+                            <button class="btn bg-white w-100 p-2 text-start fw-medium">Ingrédients</button>
+                            <button class="btn bg-white dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">toggle dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" id="ingredient-filter">
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-2 pe-4 tagfilter">
-                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Appareils</div>
-                    <div class="tagfilter__icon">
-                        <span class="fa-solid fa-chevron-up"></span>
+
+                <div class="col-2 pe-4">
+                    <div class="dropdown">
+                        <div class="btn-group w-100">
+                            <button class="btn bg-white w-100 p-2 text-start fw-medium">Appareils</button>
+                            <button class="btn bg-white dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">toggle dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" id="appliance-filter">
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-2 pe-4 tagfilter">
-                    <div class="btn bg-white w-100 text-start rounded-3 p-2">Ustensils</div>
-                    <div class="tagfilter__icon">
-                        <span class="fa-solid fa-chevron-up"></span>
+
+                <div class="col-2 pe-4">
+                    <div class="dropdown">
+                        <div class="btn-group w-100">
+                            <button class="btn bg-white w-100 p-2 text-start fw-medium">Ustensils</button>
+                            <button class="btn bg-white dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">toggle dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" id="ustensils-filter">
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
                 <div class="col-6 text-end">
-                    <h2 id="recipesNumber" class="fs-4 my-0">blabla</h2>
+                    <h2 id="recipesNumber" class="fs-4 my-0"></h2>
                 </div>
             </div>
-            <div class="row g-4 align-items-center mt-5" id="recipes-wrapper">
+
+            <!--selected filter-->
+            <div class="row" id="tag">
+                <!-- <div class="col-1">
+                    <div class="tagfilter bg-primary text-start rounded-2 p-2">
+                        <span class="align-text-bottom m-0">tag</span>
+                        <span class="tagfilter__icon fa-solid fa-xmark"></span>
+                    </div>
+                </div> -->
+            </div>
+
+            <!--recipes cards-->
+            <div class="row g-5 align-items-center mt-5" id="recipes-wrapper">
 
             </div>
+
         </section>
     </main>
     <script type="module" src="js/main.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>

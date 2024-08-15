@@ -1,3 +1,5 @@
+import { getRecipesData } from "../API/api.js";
+
 export class Recipes {
     constructor(data) {
         this.id = data.id;
@@ -32,8 +34,8 @@ export class Recipes {
             <h4 class="card-subtitle mt-4 mb-3 fs-6 fw-bold">Ingrédients</h4>
             `;
         recipeCardBody.innerHTML = bodyContent;
-        
-        const ingredientList = this.getIngredientListDom();
+
+        const ingredientList = this.getIngredientListForRecipesCard();
         recipeCardBody.appendChild(ingredientList);
 
         recipeCard.appendChild(recipeCardBody);
@@ -42,7 +44,7 @@ export class Recipes {
         return recipeCol;
     }
 
-    getIngredientListDom() {
+    getIngredientListForRecipesCard() {
         const ingredientList = document.createElement("div");
         ingredientList.classList.add("row");
 
@@ -73,4 +75,31 @@ export class Recipes {
 
         return ingredientList;
     }
+
+    getIngredients() {
+        const ingredientsList = [];
+        this.ingredients.forEach((ingredients) => {
+            const ingredient = ingredients.ingredient;
+            ingredientsList.push(ingredient);
+        });
+        return ingredientsList;
+    }
+
+    getAppliance() {
+        return this.appliance;
+    }
+
+    getUstensils() {
+        return this.ustensils;
+    }
+}
+
+export async function createRecipesObjectArray() {
+    const { recipes } = await getRecipesData();
+    let arrayOfRecipeObject = [];
+    recipes.forEach((data) => {
+        const recipeObject = new Recipes(data);
+        arrayOfRecipeObject.push(recipeObject);
+    });
+    return arrayOfRecipeObject;
 }
