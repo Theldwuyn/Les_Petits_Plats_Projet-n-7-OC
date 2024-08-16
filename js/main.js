@@ -1,20 +1,15 @@
-import { createRecipesObjectArray } from "./Template/recipesTemplate.js";
+// Variables
+import { arrayOfRecipeObject } from "./globals.js";
+
+// Functions
 import { displayFilter } from "./utils/dropdown-filter.js";
 
-//Récupérer les données
-//Créer les objets recipes
-//Créer les éléments dom pour chaque recette
-//ajouter les éléments dom au html
-
-async function main() {
-    const arrayOfRecipeObject = await createRecipesObjectArray();
-    displayRecipes(arrayOfRecipeObject);
-}
-
-export async function displayRecipes(arrayOfRecipeObject) {
+export function displayRecipes(arrayOfRecipeObject) {
 
     const recipesWrapper = document.getElementById("recipes-wrapper");
 
+    //When the function is called multiple times (e.g. by filters function), 
+    //empty the page of all recipes before displaying to avoid duplicate
     if (recipesWrapper.hasChildNodes) {
         recipesWrapper.innerHTML = '';
     }
@@ -39,4 +34,4 @@ function displayNumberOfRecipes(numberOfRecipes) {
     recipeNumberDom.textContent = `${numberOfRecipes} recettes`;
 }
 
-main();
+displayRecipes(arrayOfRecipeObject);

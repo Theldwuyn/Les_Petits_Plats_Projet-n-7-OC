@@ -1,5 +1,8 @@
+// Variables
+import { arrayOfRecipeObject } from "../globals.js";
+
+// Functions
 import { displayRecipes } from "../main.js";
-import { createRecipesObjectArray } from "../Template/recipesTemplate.js";
 
 const ingredientDropdown = document.getElementById("ingredient-filter");
 const applianceDropdown = document.getElementById("appliance-filter");
@@ -105,7 +108,7 @@ function createTagElement(tagText) {
     const tagElement = document.createElement("div");
     tagElement.classList.add("tagfilter", "bg-primary", "text-start", "rounded-2", "p-2");
 
-    const tagContent = document.createElement("span");
+    const tagContent = document.createElement("p");
     tagContent.classList.add("align-text-bottom", "m-0");
     tagContent.textContent = tagText;
 
@@ -121,7 +124,6 @@ function createTagElement(tagText) {
 
 
 
-const arrayOfRecipes = await createRecipesObjectArray();
 
 //filtrer la liste des objets recipes en fonction des tags actifs
     //récupérer la liste des objets
@@ -134,7 +136,7 @@ function filterRecipeWithTag(arrayOfActiveTag) {
     if(arrayOfActiveTag.length > 0) {
 
         let arrayOfFilteredRecipe = [];
-        let arrayToFilter = arrayOfRecipes;
+        let arrayToFilter = arrayOfRecipeObject;
 
         for (let i = 0; i < arrayOfActiveTag.length; i++){
             console.log(arrayToFilter);
@@ -180,6 +182,6 @@ function filterRecipeWithTag(arrayOfActiveTag) {
         displayRecipes(arrayOfFilteredRecipe);
     
     } else {
-        displayRecipes(arrayOfRecipes);
+        displayRecipes(arrayOfRecipeObject);
     }
 }
