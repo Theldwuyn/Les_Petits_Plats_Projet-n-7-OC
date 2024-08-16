@@ -185,3 +185,55 @@ function filterRecipeWithTag(arrayOfActiveTag) {
         displayRecipes(arrayOfRecipeObject);
     }
 }
+
+/************** Search bar **************/
+
+const searchBar = document.querySelector("input[type=text]");
+
+searchBar.addEventListener("keyup", filterRecipeWithSearchBar);
+
+function filterRecipeWithSearchBar() {
+
+    const arrayOfCurrentDisplayedRecipes = getCurrentlyDisplayedRecipes(arrayOfRecipeObject);
+    let userKeyWord = searchBar.value.toLowerCase();
+    console.log(userKeyWord.length);
+
+    let arrayOfFilteredRecipe = [];
+    let indexSet = new Set();
+
+    const mapName = arrayOfCurrentDisplayedRecipes.map(elem => elem.name);
+    const mapIngredient = arrayOfCurrentDisplayedRecipes.map(elem => elem.ingredients);
+    const mapDescription = arrayOfCurrentDisplayedRecipes.map(elem => elem.description);
+
+    if (userKeyWord.length > 2) {
+        
+        for (let i = 0; i < arrayOfCurrentDisplayedRecipes.length; i++) {
+
+            for (let j = 0; j < mapName.length; j++) {
+                if(mapName[j].toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(j);
+                }
+            }
+
+            for (let k = 0; k < mapIngredient.length; k++) {
+                for(let m = 0; m < mapIngredient[k].length; m++) {
+                    if(mapIngredient[k][m].ingredient.toLowerCase().includes(userKeyWord)) {
+                        indexSet.add(k);
+                    }
+                }
+            }
+
+            for (let m = 0; m < mapDescription.length; m++) {
+                if(mapDescription[m].toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(m);
+                }
+            }
+        }
+        arrayOfFilteredRecipe = arrayOfCurrentDisplayedRecipes.filter((recipe, index) => indexSet.has(index));
+        displayRecipes(arrayOfFilteredRecipe, userKeyWord);
+
+    } else {
+        displayRecipes(arrayOfRecipeObject);
+        filterRecipeWithTag(arrayOfActiveTag);
+    }
+}
