@@ -90,6 +90,7 @@ body {
 
 .card {
     height: 750px;
+    position: relative;
 
     &-img-top {
         height: 250px;
@@ -106,6 +107,12 @@ body {
 
     & h5 + p {
         color: $grey;
+    }
+
+    &__time {
+        position: absolute;
+        top: 20px;
+        right: 20px;
     }
 }
 

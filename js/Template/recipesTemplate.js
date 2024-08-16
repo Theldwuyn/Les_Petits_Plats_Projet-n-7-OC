@@ -32,6 +32,7 @@ export class Recipes {
             <h4 class="card-subtitle mb-3 fs-6 fw-bold">Recette</h4>
             <p class="card-text">${this.description}</p>
             <h4 class="card-subtitle mt-4 mb-3 fs-6 fw-bold">Ingrédients</h4>
+            <p class="py-1 px-3 bg-primary rounded-4 card__time">${this.time}min</p>
             `;
         recipeCardBody.innerHTML = bodyContent;
 
