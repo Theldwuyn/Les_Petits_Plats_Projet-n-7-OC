@@ -16,14 +16,14 @@ export function displayRecipes(arrayOfRecipeObject, keyWordFromSearchBar) {
 
     if (arrayOfRecipeObject.length > 0) {
 
-    arrayOfRecipeObject.forEach((recipeObject) => {
-        const recipeCard = recipeObject.getRecipesCard();
-        recipesWrapper.appendChild(recipeCard);
-    });
+        arrayOfRecipeObject.forEach((recipeObject) => {
+            const recipeCard = recipeObject.getRecipesCard();
+            recipesWrapper.appendChild(recipeCard);
+        });
 
-    const numberOfRecipes = numberOfRecipesDisplayed(recipesWrapper);
-    displayNumberOfRecipes(numberOfRecipes);
-    displayFilter(arrayOfRecipeObject);
+        const numberOfRecipes = numberOfRecipesDisplayed(recipesWrapper);
+        displayNumberOfRecipes(numberOfRecipes);
+        displayFilter(arrayOfRecipeObject);
 
     } else {
         const errorMessage = document.createElement("p");
