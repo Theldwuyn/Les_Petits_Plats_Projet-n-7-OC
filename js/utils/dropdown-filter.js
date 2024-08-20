@@ -77,27 +77,8 @@ function getCurrentlyDisplayedRecipes(arrayOfRecipeObject) {
     //filtrer les recettes en fonction du/des tags
         //manipuler la liste des objets recette
         //appel de la fonction displayRecipes avec nouvelle liste d'objet
-
-let arrayOfActiveTag = [];
-
-function eventHandlerAddTagOnLiElement(e) {
-    const tagText = e.target.textContent;
-    createTagElement(tagText);
-    arrayOfActiveTag.push(tagText);
-    filterRecipeWithTag(arrayOfActiveTag);
-    //console.log(arrayOfActiveTag);
-}
-
-function eventHandlerRemoveTag(e) {
-    const tagWrapper = e.target.parentElement.parentElement;
-    tagRow.removeChild(tagWrapper);
-    const tagContent = e.target.previousSibling.textContent;
-    const index = arrayOfActiveTag.indexOf(arrayOfActiveTag
-                                    .find((element) => element === tagContent));
-    arrayOfActiveTag.splice(index, 1);
-    filterRecipeWithTag(arrayOfActiveTag);
-    //console.log(arrayOfActiveTag);
-}
+    //
+//
 
 const tagRow = document.getElementById("tag")
 
@@ -122,6 +103,46 @@ function createTagElement(tagText) {
     tagRow.appendChild(tagWrapper);
 }
 
+let arrayOfActiveTag = [];
+
+function eventHandlerAddTagOnLiElement(e) {
+    const tagText = e.target.textContent;
+    createTagElement(tagText);
+    arrayOfActiveTag.push(tagText);
+
+    const arrayFilteredWithSeachBar = filterRecipeWithSearchBar();
+    const arrayFilteredWithTag = filterRecipeWithTag(arrayOfActiveTag);
+    const arrayToDisplay = getIntersectionOfArray(arrayFilteredWithSeachBar, arrayFilteredWithTag);
+
+    displayRecipes(arrayToDisplay, searchBar.value);
+}
+
+function eventHandlerRemoveTag(e) {
+    const tagWrapper = e.target.parentElement.parentElement;
+    tagRow.removeChild(tagWrapper);
+    const tagContent = e.target.previousSibling.textContent;
+
+    const index = arrayOfActiveTag.indexOf(arrayOfActiveTag
+                                    .find((element) => element === tagContent));
+    arrayOfActiveTag.splice(index, 1);
+
+    const arrayFilteredWithSeachBar = filterRecipeWithSearchBar();
+    const arrayFilteredWithTag = filterRecipeWithTag(arrayOfActiveTag);
+    const arrayToDisplay = getIntersectionOfArray(arrayFilteredWithSeachBar, arrayFilteredWithTag);
+
+    displayRecipes(arrayToDisplay, searchBar.value);
+}
+
+function getIntersectionOfArray(array1, array2) {
+    if (array1.length > array2.length) {
+        return array1.filter(a => array2.some(b => b.name === a.name));
+    } else {
+        return array2.filter(a => array1.some(b => a.name === b.name));
+    }
+}
+
+
+
 
 
 
@@ -130,7 +151,11 @@ function createTagElement(tagText) {
     //comparer les propriétés des objets avec les tags
     //créer une nouvelle liste d'objet trié
     //appel de la fonction displayRecipes avec la nouvelle liste
-
+/**
+ * Return the filtered recipe object array depending on active tags
+ * @param {String[]} arrayOfActiveTag 
+ * @returns {Recipe[]}
+ */
 function filterRecipeWithTag(arrayOfActiveTag) {
   
     if(arrayOfActiveTag.length > 0) {
@@ -138,15 +163,17 @@ function filterRecipeWithTag(arrayOfActiveTag) {
         let arrayOfFilteredRecipe = [];
         let arrayToFilter = arrayOfRecipeObject;
 
+        /* For loop to iterate through all active tags */
         for (let i = 0; i < arrayOfActiveTag.length; i++){
-            console.log(arrayToFilter);
 
             let arrayMapIngredient = arrayToFilter.map(item => item.ingredients);
             let arrayMapAppliance = arrayToFilter.map(item => item.appliance);
             let arrayMapUstensil = arrayToFilter.map(item => item.ustensils);
 
-            //filtre ingrédient
+            /* Usage of a set to avoid duplicate value */
             let indexSet = new Set();
+
+            //filtre ingrédient
             arrayMapIngredient.forEach(elem => {
                 elem.forEach(item => {
                     if(arrayOfActiveTag[i] === item.ingredient.toLowerCase()) {
@@ -160,8 +187,14 @@ function filterRecipeWithTag(arrayOfActiveTag) {
                 if(arrayOfActiveTag[i] === elem.toLowerCase()) {
                     var idx = arrayMapAppliance.indexOf(elem);
                     indexSet.add(idx);
+                    
+                    /* While loop to find all repetition of "elem" in the array
+                    because indexOf return the first index at which a given 
+                    element can be found in the array or -1 if it is not present */
                     while(idx != -1) {
                         indexSet.add(idx);
+
+                        /* indexOf(searchElement, fromIndex) */
                         idx = arrayMapAppliance.indexOf(elem, idx + 1);
                     }
                 }
@@ -179,9 +212,68 @@ function filterRecipeWithTag(arrayOfActiveTag) {
             arrayOfFilteredRecipe = arrayToFilter.filter((recipe, index) => indexSet.has(index));
             arrayToFilter = arrayOfFilteredRecipe;
         }
-        displayRecipes(arrayOfFilteredRecipe);
+        return arrayOfFilteredRecipe;
     
     } else {
-        displayRecipes(arrayOfRecipeObject);
+        return arrayOfRecipeObject;
+    }
+}
+
+/************** Search bar **************/
+
+const searchBar = document.querySelector("input[type=text]");
+
+searchBar.addEventListener("keyup", (e) => {
+    const arrayFilteredWithSeachBar = filterRecipeWithSearchBar();
+    const arrayFilteredWithTag = filterRecipeWithTag(arrayOfActiveTag);
+    const arrayToDisplay = getIntersectionOfArray(arrayFilteredWithSeachBar, arrayFilteredWithTag);
+    displayRecipes(arrayToDisplay, e.target.value);
+});
+/**
+ * Return a filtered array of Recipe object depending on the keyword
+ * typed by user in the form, IF the keyword has at least 3 characters
+ * @returns {Recipe[]}
+ */
+function filterRecipeWithSearchBar() {
+
+    let userKeyWord = searchBar.value.toLowerCase();
+
+    let arrayOfFilteredRecipe = [];
+    let indexSet = new Set();
+
+    const mapName = arrayOfRecipeObject.map(elem => elem.name);
+    const mapIngredient = arrayOfRecipeObject.map(elem => elem.ingredients);
+    const mapDescription = arrayOfRecipeObject.map(elem => elem.description);
+
+    if (userKeyWord.length > 2) {
+        
+        for (let i = 0; i < arrayOfRecipeObject.length; i++) {
+
+            mapName.forEach(name => {
+                if(name.toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(mapName.indexOf(name));
+                }
+            });
+
+            mapIngredient.forEach(elem => {
+                elem.forEach(item => {
+                    if(item.ingredient.toLowerCase().includes(userKeyWord)) {
+                        indexSet.add(mapIngredient.indexOf(elem));
+                    }
+                });
+            });
+
+            mapDescription.forEach(description => {
+                if(description.toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(mapDescription.indexOf(description));
+                }
+            });
+
+        }
+        arrayOfFilteredRecipe = arrayOfRecipeObject.filter((recipe, index) => indexSet.has(index));
+        return arrayOfFilteredRecipe;
+
+    } else {
+        return arrayOfRecipeObject;
     }
 }

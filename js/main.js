@@ -14,14 +14,22 @@ export function displayRecipes(arrayOfRecipeObject) {
         recipesWrapper.innerHTML = '';
     }
 
-    arrayOfRecipeObject.forEach((recipeObject) => {
-        const recipeCard = recipeObject.getRecipesCard();
-        recipesWrapper.appendChild(recipeCard);
-    });
+    if (arrayOfRecipeObject.length > 0) {
 
-    const numberOfRecipes = numberOfRecipesDisplayed(recipesWrapper);
-    displayNumberOfRecipes(numberOfRecipes);
-    displayFilter(arrayOfRecipeObject);
+        arrayOfRecipeObject.forEach((recipeObject) => {
+            const recipeCard = recipeObject.getRecipesCard();
+            recipesWrapper.appendChild(recipeCard);
+        });
+
+        const numberOfRecipes = numberOfRecipesDisplayed(recipesWrapper);
+        displayNumberOfRecipes(numberOfRecipes);
+        displayFilter(arrayOfRecipeObject);
+
+    } else {
+        const errorMessage = document.createElement("p");
+        errorMessage.innerText = `Aucune recette ne contient "${keyWordFromSearchBar}", vous pouvez chercher "tartes au pommes", "poisson" etc.`;
+        recipesWrapper.appendChild(errorMessage);
+    }
 }
 
 function numberOfRecipesDisplayed(recipesWrapper) {
