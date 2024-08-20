@@ -247,25 +247,26 @@ function filterRecipeWithSearchBar() {
 
     if (userKeyWord.length > 2) {
         
-        for (let i = 0; i < arrayOfRecipeObject.length; i++) {
+        for (let i = 0, n = arrayOfRecipeObject.length; i < n; i++) {
 
-            for (let j = 0; j < mapName.length; j++) {
+            for (let j = 0, nameN = mapName.length; j < nameN; j++) {
                 if(mapName[j].toLowerCase().includes(userKeyWord)) {
                     indexSet.add(j);
                 }
             }
 
-            for (let k = 0; k < mapIngredient.length; k++) {
-                for(let m = 0; m < mapIngredient[k].length; m++) {
+            mainloop: for (let k = 0, ingredN = mapIngredient.length; k < ingredN; k++) {
+                for(let m = 0, nloop = mapIngredient[k].length; m < nloop; m++) {
                     if(mapIngredient[k][m].ingredient.toLowerCase().includes(userKeyWord)) {
                         indexSet.add(k);
+                        continue mainloop;
                     }
                 }
             }
 
-            for (let m = 0; m < mapDescription.length; m++) {
-                if(mapDescription[m].toLowerCase().includes(userKeyWord)) {
-                    indexSet.add(m);
+            for (let n = 0, descrN = mapDescription.length; n < descrN; n++) {
+                if(mapDescription[n].toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(n);
                 }
             }
         }
