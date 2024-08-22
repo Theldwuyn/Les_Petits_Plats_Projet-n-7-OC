@@ -162,54 +162,32 @@ function filterRecipeWithTag(arrayOfActiveTag) {
 
         let arrayOfFilteredRecipe = [];
         let arrayToFilter = arrayOfRecipeObject;
+        let indexSet = new Set();
 
-        /* For loop to iterate through all active tags */
-        for (let i = 0; i < arrayOfActiveTag.length; i++){
+        for (let i = 0; i < arrayOfActiveTag.length; i++) {
 
-            let arrayMapIngredient = arrayToFilter.map(item => item.ingredients);
-            let arrayMapAppliance = arrayToFilter.map(item => item.appliance);
-            let arrayMapUstensil = arrayToFilter.map(item => item.ustensils);
+            for (let k = 0; k < arrayToFilter.length; k++) {
 
-            /* Usage of a set to avoid duplicate value */
-            let indexSet = new Set();
+                for (let m = 0; m < arrayToFilter[k].ingredients.length; m++) {
+                    if(arrayToFilter[k].ingredients[m].ingredient
+                        .toLowerCase() === arrayOfActiveTag[i]) {
+                            indexSet.add(k);
+                            break;
+                        }
+                }
 
-            //filtre ingrédient
-            arrayMapIngredient.forEach(elem => {
-                elem.forEach(item => {
-                    if(arrayOfActiveTag[i] === item.ingredient.toLowerCase()) {
-                        indexSet.add(arrayMapIngredient.indexOf(elem));
-                    }
-                });
-            });
+                if(arrayToFilter[k].appliance.toLowerCase() === arrayOfActiveTag[i]) {
+                    indexSet.add(k);
+                }
 
-            //filtre appliance
-            arrayMapAppliance.forEach(elem => {
-                if(arrayOfActiveTag[i] === elem.toLowerCase()) {
-                    var idx = arrayMapAppliance.indexOf(elem);
-                    indexSet.add(idx);
-                    
-                    /* While loop to find all repetition of "elem" in the array
-                    because indexOf return the first index at which a given 
-                    element can be found in the array or -1 if it is not present */
-                    while(idx != -1) {
-                        indexSet.add(idx);
-
-                        /* indexOf(searchElement, fromIndex) */
-                        idx = arrayMapAppliance.indexOf(elem, idx + 1);
+                for (let n = 0; n < arrayToFilter[k].ustensils.length; n++) {
+                    if(arrayToFilter[k].ustensils[n].toLowerCase() === arrayOfActiveTag[i]) {
+                        indexSet.add(k);
+                        break;
                     }
                 }
-            });
-
-            //filtre ustensils
-            arrayMapUstensil.forEach(elem => {
-                elem.forEach(item => {
-                    if(arrayOfActiveTag[i] === item.toLowerCase()) {
-                        indexSet.add(arrayMapUstensil.indexOf(elem));
-                    }
-                });
-            });
-
-            arrayOfFilteredRecipe = arrayToFilter.filter((recipe, index) => indexSet.has(index));
+            }
+            arrayOfFilteredRecipe = filterArrayWithSet(arrayToFilter, indexSet);
             arrayToFilter = arrayOfFilteredRecipe;
         }
         return arrayOfFilteredRecipe;
