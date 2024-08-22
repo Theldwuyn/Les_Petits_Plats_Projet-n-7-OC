@@ -241,39 +241,39 @@ function filterRecipeWithSearchBar() {
     let arrayOfFilteredRecipe = [];
     let indexSet = new Set();
 
-    const mapName = arrayOfRecipeObject.map(elem => elem.name);
-    const mapIngredient = arrayOfRecipeObject.map(elem => elem.ingredients);
-    const mapDescription = arrayOfRecipeObject.map(elem => elem.description);
-
     if (userKeyWord.length > 2) {
         
-        for (let i = 0, n = arrayOfRecipeObject.length; i < n; i++) {
+        for (let i = 0; i < arrayOfRecipeObject.length; i++) {
 
-            for (let j = 0, nameN = mapName.length; j < nameN; j++) {
-                if(mapName[j].toLowerCase().includes(userKeyWord)) {
-                    indexSet.add(j);
+            if(arrayOfRecipeObject[i].name.toLowerCase().includes(userKeyWord)) {
+                indexSet.add(i);
+            }
+
+            for (let k = 0; k < arrayOfRecipeObject[i].ingredients.length; k++) {
+                if(arrayOfRecipeObject[i].ingredients[k].ingredient.toLowerCase().includes(userKeyWord)) {
+                    indexSet.add(i);
+                    break;
                 }
             }
 
-            mainloop: for (let k = 0, ingredN = mapIngredient.length; k < ingredN; k++) {
-                for(let m = 0, nloop = mapIngredient[k].length; m < nloop; m++) {
-                    if(mapIngredient[k][m].ingredient.toLowerCase().includes(userKeyWord)) {
-                        indexSet.add(k);
-                        continue mainloop;
-                    }
-                }
-            }
-
-            for (let n = 0, descrN = mapDescription.length; n < descrN; n++) {
-                if(mapDescription[n].toLowerCase().includes(userKeyWord)) {
-                    indexSet.add(n);
-                }
+            if(arrayOfRecipeObject[i].description.toLowerCase().includes(userKeyWord)) {
+                indexSet.add(i);
             }
         }
-        arrayOfFilteredRecipe = arrayOfRecipeObject.filter((recipe, index) => indexSet.has(index));
+        arrayOfFilteredRecipe = filterArrayWithSet(arrayOfRecipeObject, indexSet);
         return arrayOfFilteredRecipe;
 
     } else {
         return arrayOfRecipeObject;
     }
+}
+
+function filterArrayWithSet(array, set) {
+    let filterArray = [];
+
+    for (const index of set) {
+        filterArray.push(array[index]);
+    }
+
+    return filterArray;
 }
