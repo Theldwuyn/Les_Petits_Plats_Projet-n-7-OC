@@ -21,6 +21,7 @@ export class Recipes {
 
         const recipeImg = document.createElement("img");
         recipeImg.setAttribute("src", `assets/recipes/${this.image}`);
+        recipeImg.setAttribute("alt", "photo d'un plat");
         recipeImg.classList.add("card-img-top");
         recipeImg.classList.add("object-fit-cover")
         recipeCard.appendChild(recipeImg);
