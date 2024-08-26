@@ -177,9 +177,9 @@ function filterRecipeWithTag(arrayOfActiveTag) {
 
         let arrayOfFilteredRecipe = [];
         let arrayToFilter = arrayOfRecipeObject;
-        let indexSet = new Set();
-
+        
         for (let i = 0; i < arrayOfActiveTag.length; i++) {
+            let indexSet = new Set();
 
             for (let k = 0; k < arrayToFilter.length; k++) {
 
