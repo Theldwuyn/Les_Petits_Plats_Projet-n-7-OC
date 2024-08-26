@@ -36,13 +36,26 @@ export function displayFilter(arrayOfRecipeObject) {
     appendLiElementToDropdownMenu(cleanArrayOfUstensils, ustensilDropdown);
 }
 
+/**
+ * Remove duplicate from an array of string
+ * @param {Array<String>} array 
+ * @returns 
+ */
 function removeDuplicateFromArray(array) {
+    /* Usage of flat method to remove any encapsulate array
+    i.e. ingredients property of recipe object are arrays, so if I don't flat
+    them, i'll have [[array1], [array2], etc...] */
     const cleanArray = [...new Set((array.flat(Infinity))
                                     .map((item) => item.toLowerCase())
                                 )];
     return cleanArray;
 }
 
+/**
+ * 
+ * @param {Array} array 
+ * @param {Node} parentElement 
+ */
 function appendLiElementToDropdownMenu(array, parentElement) {
     if (parentElement.hasChildNodes()) {
         parentElement.innerHTML = '';
@@ -55,33 +68,29 @@ function appendLiElementToDropdownMenu(array, parentElement) {
         parentElement.appendChild(liElement);
     });
 }
-
-function getCurrentlyDisplayedRecipes(arrayOfRecipeObject) {
+/**
+ * Filter the recipes object by comparing the name property with cards' title
+ * @param {Array<Recipes>} array 
+ * @returns {Array<Recipes>} 
+ */
+function getCurrentlyDisplayedRecipes(array) {
     const allRecipeCardsTitle = document.querySelectorAll(".card-title");
     const arrayOfCurrentDisplayedRecipes = [];
 
     allRecipeCardsTitle.forEach((title) => {
-        arrayOfCurrentDisplayedRecipes.push(...arrayOfRecipeObject.filter(recipe => recipe.name === title.textContent));
+        arrayOfCurrentDisplayedRecipes.push(...array.filter(recipe => recipe.name === title.textContent));
     });
 
     return arrayOfCurrentDisplayedRecipes;
 }
 
-//event listener sur chaque li
-    //récupérer valeur texte du li cliqué
-
-    //créer l'élément DOM du tag
-
-    //ajouter le tag au document
-
-    //filtrer les recettes en fonction du/des tags
-        //manipuler la liste des objets recette
-        //appel de la fonction displayRecipes avec nouvelle liste d'objet
-    //
-//
-
 const tagRow = document.getElementById("tag")
 
+/**
+ * Append a "tag" element to the id="tag" div
+ * Called by the event listener on li element in each dropdown menu
+ * @param {string} tagText 
+ */
 function createTagElement(tagText) {
     const tagWrapper = document.createElement("div");
     tagWrapper.classList.add("col-1");
@@ -105,6 +114,12 @@ function createTagElement(tagText) {
 
 let arrayOfActiveTag = [];
 
+/**
+ * Callback function of event listener on li element inside each dropdown menu
+ * Apply all filter (search bar and tags) to be sure to cumulate filters
+ * Call displayRecipes after filters are applied
+ * @param {Node} e event
+ */
 function eventHandlerAddTagOnLiElement(e) {
     const tagText = e.target.textContent;
     createTagElement(tagText);
@@ -117,6 +132,13 @@ function eventHandlerAddTagOnLiElement(e) {
     displayRecipes(arrayToDisplay, searchBar.value);
 }
 
+/**
+ * Callback function of event listener on close icon of each tag element
+ * Remove the tag from the id="tag" div
+ * Apply all filter (search bar and tags) to be sure to cumulate filters
+ * Call displayRecipes after filters are applied
+ * @param {Node} e 
+ */
 function eventHandlerRemoveTag(e) {
     const tagWrapper = e.target.parentElement.parentElement;
     tagRow.removeChild(tagWrapper);
@@ -133,24 +155,16 @@ function eventHandlerRemoveTag(e) {
     displayRecipes(arrayToDisplay, searchBar.value);
 }
 
+/**
+ * 
+ * @param {Array} array1 
+ * @param {Array} array2 
+ * @returns 
+ */
 function getIntersectionOfArray(array1, array2) {
-    if (array1.length > array2.length) {
-        return array1.filter(a => array2.some(b => b.name === a.name));
-    } else {
-        return array2.filter(a => array1.some(b => a.name === b.name));
-    }
+    return array1.filter(a => array2.some(b => b.name === a.name));
 }
 
-
-
-
-
-
-//filtrer la liste des objets recipes en fonction des tags actifs
-    //récupérer la liste des objets
-    //comparer les propriétés des objets avec les tags
-    //créer une nouvelle liste d'objet trié
-    //appel de la fonction displayRecipes avec la nouvelle liste
 /**
  * Return the filtered recipe object array depending on active tags
  * @param {String[]} arrayOfActiveTag 
@@ -246,6 +260,12 @@ function filterRecipeWithSearchBar() {
     }
 }
 
+/**
+ * 
+ * @param {Array} array 
+ * @param {Set<number>} set 
+ * @returns 
+ */
 function filterArrayWithSet(array, set) {
     let filterArray = [];
 
