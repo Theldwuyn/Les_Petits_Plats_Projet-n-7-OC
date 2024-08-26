@@ -4,7 +4,7 @@ import { arrayOfRecipeObject } from "./globals.js";
 // Functions
 import { displayFilter } from "./utils/dropdown-filter.js";
 
-export function displayRecipes(arrayOfRecipeObject) {
+export function displayRecipes(arrayOfRecipeObject, keyWordFromSearchBar) {
 
     const recipesWrapper = document.getElementById("recipes-wrapper");
 
