@@ -29,6 +29,7 @@ export function displayRecipes(arrayOfRecipeObject, keyWordFromSearchBar) {
         const errorMessage = document.createElement("p");
         errorMessage.innerText = `Aucune recette ne contient "${keyWordFromSearchBar}", vous pouvez chercher "tartes au pommes", "poisson" etc.`;
         recipesWrapper.appendChild(errorMessage);
+        displayNumberOfRecipes(0);
     }
 }
 
